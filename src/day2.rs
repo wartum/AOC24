@@ -102,7 +102,7 @@ mod tests {
     use super::remove_from_report;
 
     fn real_input() -> String {
-        common::get_input(2, "resources/inputs").unwrap()
+        common::get_input(2, "resources/inputs").expect("Cannot get input")
     }
 
     fn sample_input() -> String {
@@ -114,6 +114,18 @@ mod tests {
                8 6 4 4 1
                1 3 6 7 9"#,
         )
+    }
+
+    #[test]
+    pub fn new_report() {
+        let report = vec![1, 2, 3];
+        let report_without_0 = remove_from_report(&report, 0);
+        let report_without_1 = remove_from_report(&report, 1);
+        let report_without_2 = remove_from_report(&report, 2);
+
+        assert_eq!(report_without_0, vec![2, 3]);
+        assert_eq!(report_without_1, vec![1, 3]);
+        assert_eq!(report_without_2, vec![1, 2]);
     }
 
     #[test]
@@ -138,17 +150,5 @@ mod tests {
     pub fn two_star_answer() {
         let solution = day2::solve(real_input()).expect("expected Ok(Solution), got Err()");
         assert_eq!(solution.two_star_answer, 296);
-    }
-
-    #[test]
-    pub fn new_report_test() {
-        let report = vec![1, 2, 3];
-        let report_without_0 = remove_from_report(&report, 0);
-        let report_without_1 = remove_from_report(&report, 1);
-        let report_without_2 = remove_from_report(&report, 2);
-
-        assert_eq!(report_without_0, vec![2, 3]);
-        assert_eq!(report_without_1, vec![1, 3]);
-        assert_eq!(report_without_2, vec![1, 2]);
     }
 }

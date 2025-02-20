@@ -2,6 +2,7 @@ mod common;
 mod qml_types;
 mod day1;
 mod day2;
+mod day3;
 
 use qmetaobject::{prelude::*, QUrl};
 use qml_types::register_all_qml_types;

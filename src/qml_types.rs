@@ -5,6 +5,7 @@ use std::collections::HashMap;
 use crate::common::{get_input, Solution};
 use crate::day1;
 use crate::day2;
+use crate::day3;
 
 #[derive(QObject, Default)]
 pub struct AOC24Solutions {
@@ -41,14 +42,13 @@ impl AOC24Solutions {
     }
 
     fn create_solution(&mut self, day_number: i32) -> Result<Solution, String> {
-        let input = get_input(day_number, &self.inputs_dir.to_string())
-            .map_err(|err| err.to_string())?;
-
-        return match day_number {
+        let input = get_input(day_number, &self.inputs_dir.to_string())?;
+        match day_number {
             1 => day1::solve(input),
             2 => day2::solve(input),
+            3 => day3::solve(input),
             _ => Err(String::from("solution for given day not implemented")),
-        };
+        }
     }
 }
 

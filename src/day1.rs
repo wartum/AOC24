@@ -83,7 +83,7 @@ mod tests {
     use crate::day1;
 
     fn real_input() -> String {
-        common::get_input(1, "resources/inputs").unwrap()
+        common::get_input(1, "resources/inputs").expect("Cannot get input")
     }
 
     fn sample_input() -> String {
