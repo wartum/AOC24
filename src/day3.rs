@@ -123,7 +123,7 @@ impl LexicalAnalyzer {
                 }
             }
             MulState::CloseBracket => {
-                if self.output.len() > 0 {
+                if !self.output.is_empty() {
                     self.output.push(' ');
                 }
                 self.output.push_str(&self.buffer);
@@ -164,7 +164,7 @@ impl LexicalAnalyzer {
                 }
             }
             DoState::CloseBracket => {
-                if self.output.len() > 0 {
+                if !self.output.is_empty() {
                     self.output.push(' ');
                 }
                 self.output.push_str("do()");
@@ -224,7 +224,7 @@ impl LexicalAnalyzer {
                 }
             }
             DontState::CloseBracket => {
-                if self.output.len() > 0 {
+                if !self.output.is_empty() {
                     self.output.push(' ');
                 }
                 self.output.push_str("don't()");
@@ -261,7 +261,7 @@ pub fn solve(input: String) -> Result<Solution, String> {
     })
 }
 
-fn calculate(tokens: &Vec<(i32, i32)>) -> i32 {
+fn calculate(tokens: &[(i32, i32)]) -> i32 {
     tokens.iter().map(|pair| pair.0 * pair.1).sum()
 }
 
@@ -283,7 +283,7 @@ fn tokenize(input: &str, toggle_support: bool) -> Vec<(i32, i32)> {
         }
     }
 
-    return tokens;
+    tokens
 }
 
 fn extract_numbers(input: &str) -> Option<(i32, i32)> {
@@ -302,7 +302,8 @@ fn extract_numbers(input: &str) -> Option<(i32, i32)> {
         .collect::<String>()
         .parse()
         .ok()?;
-    return Some((num1, num2));
+    
+    Some((num1, num2))
 }
 
 #[cfg(test)]
@@ -361,13 +362,13 @@ mod tests {
         let input_basic = String::from("mul(2,4) mul(5,5) mul(11,8) mul(8,5)");
         let input_advanced = String::from("mul(2,4) don't() mul(5,5) mul(11,8) do() mul(8,5)");
 
-        let tokens_basic = tokenize(&input_basic, false);
-        let tokens_adv_wo_toggle = tokenize(&input_advanced, false);
-        let tokens_adv_w_toggle = tokenize(&input_advanced, true);
+        let tokens1 = tokenize(&input_basic, false);
+        let tokens2 = tokenize(&input_advanced, false);
+        let tokens3 = tokenize(&input_advanced, true);
 
-        assert_eq!(vec![(2, 4), (5, 5), (11, 8), (8, 5)], tokens_basic);
-        assert_eq!(vec![(2, 4), (5, 5), (11, 8), (8, 5)], tokens_adv_wo_toggle);
-        assert_eq!(vec![(2, 4), (8, 5)], tokens_adv_w_toggle);
+        assert_eq!(vec![(2, 4), (5, 5), (11, 8), (8, 5)], tokens1);
+        assert_eq!(vec![(2, 4), (5, 5), (11, 8), (8, 5)], tokens2);
+        assert_eq!(vec![(2, 4), (8, 5)], tokens3);
     }
 
     #[test]

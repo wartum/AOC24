@@ -78,6 +78,14 @@ ApplicationWindow {
                     solutions.request_solution(3)
                 }
             }
+
+            Button {
+                text: "Day 4"
+                
+                onClicked: {
+                    solutions.request_solution(4)
+                }
+            }
         }
 
         TextArea {

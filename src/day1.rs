@@ -30,8 +30,7 @@ fn parse_input(input: String) -> Result<[Vec<i32>; 2], String> {
         .lines()
         .map(|line| {
             line.split_whitespace()
-                .skip(1)
-                .next()
+                .nth(1)
                 .ok_or(String::from("second column doesn't exist"))?
                 .parse::<i32>()
                 .or(Err(String::from("cannot convert value from second column to integer")))
@@ -45,7 +44,7 @@ fn parse_input(input: String) -> Result<[Vec<i32>; 2], String> {
             Ok(mut col2) => {
                 col1.sort();
                 col2.sort();
-                return Ok([col1, col2]);
+                Ok([col1, col2])
             }
         }
     }
@@ -64,7 +63,7 @@ fn calculate_distances(columns: &[Vec<i32>; 2]) -> i32 {
         }
     }
 
-    return distances;
+    distances
 }
 
 fn calculate_similiarities(columns: &[Vec<i32>; 2]) -> i32 {
@@ -74,7 +73,7 @@ fn calculate_similiarities(columns: &[Vec<i32>; 2]) -> i32 {
         dict.insert(v.to_owned(), v * occurences_in_column2);
     }
 
-    return columns[0].iter().map(|v| dict.get(v).unwrap()).sum();
+    columns[0].iter().map(|v| dict.get(v).unwrap()).sum()
 }
 
 #[cfg(test)]

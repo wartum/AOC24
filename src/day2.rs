@@ -8,7 +8,7 @@ pub fn solve(input: String) -> Result<Solution, String> {
             let mut two_star_answer = 0;
 
             for report in reports.iter() {
-                if is_report_safe(&report) {
+                if is_report_safe(report) {
                     one_star_answer += 1;
                     two_star_answer += 1;
                 } else {
@@ -22,10 +22,10 @@ pub fn solve(input: String) -> Result<Solution, String> {
                 }
             }
 
-            return Ok(Solution {
+            Ok(Solution {
                 one_star_answer,
                 two_star_answer,
-            });
+            })
         }
     }
 }
@@ -40,10 +40,11 @@ fn parse_input(input: String) -> Result<Vec<Vec<i32>>, String> {
             Err(_) => return Err(String::from("Invalid report format")),
         }
     }
-    return Ok(reports);
+    
+    Ok(reports)
 }
 
-fn remove_from_report(report: &Vec<i32>, index: i32) -> Vec<i32> {
+fn remove_from_report(report: &[i32], index: i32) -> Vec<i32> {
     let mut new_report = Vec::new();
     let mut i = -1;
     for level in report.iter() {
@@ -53,16 +54,17 @@ fn remove_from_report(report: &Vec<i32>, index: i32) -> Vec<i32> {
         }
         new_report.push(*level);
     }
-    return new_report;
+    
+    new_report
 }
 
-fn is_report_safe(report: &Vec<i32>) -> bool {
+fn is_report_safe(report: &[i32]) -> bool {
     if report.len() < 2 {
         eprintln!("report should contain at least 2 elements");
         return false;
     }
     let first_element = *report
-        .get(0)
+        .first()
         .expect("report should contain at least 2 elements");
     let second_element = *report
         .get(1)
@@ -81,16 +83,15 @@ fn is_report_safe(report: &Vec<i32>) -> bool {
         }
         previous_level = current_level;
     }
-    return true;
+    
+    true
 }
 
 fn get_tendency(a: i32, b: i32) -> i32 {
-    if a == b {
-        return 0;
-    } else if a < b {
-        return 1;
-    } else {
-        return -1;
+    match b.cmp(&a) {
+        std::cmp::Ordering::Equal => 0,
+        std::cmp::Ordering::Less => -1,
+        std::cmp::Ordering::Greater => 1
     }
 }
 
