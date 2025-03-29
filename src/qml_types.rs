@@ -2,7 +2,7 @@ use qmetaobject::prelude::*;
 use cstr::cstr;
 use std::collections::HashMap;
 
-use crate::common::{get_input, Solution};
+use crate::utils::{get_input, Solution};
 use crate::{day1, day2, day3, day4};
 
 #[derive(QObject, Default)]

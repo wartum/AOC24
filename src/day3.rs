@@ -1,4 +1,4 @@
-use crate::common::Solution;
+use crate::utils::Solution;
 
 enum MulState {
     Clear,
@@ -308,7 +308,7 @@ fn extract_numbers(input: &str) -> Option<(i32, i32)> {
 
 #[cfg(test)]
 mod tests {
-    use crate::{common, day3};
+    use crate::{utils, day3};
 
     use super::{tokenize, LexicalAnalyzer};
 
@@ -325,7 +325,7 @@ mod tests {
     }
 
     fn real_input() -> String {
-        common::get_input(3, "resources/inputs").expect("Cannot get input")
+        utils::get_input(3, "resources/inputs").expect("Cannot get input")
     }
 
     #[test]

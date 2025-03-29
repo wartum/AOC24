@@ -1,4 +1,4 @@
-use crate::common::Solution;
+use crate::utils::Solution;
 
 #[derive(Debug)]
 struct WordSearch {
@@ -172,10 +172,10 @@ fn search_xmas_north_west(word_search: &WordSearch, initial_x: i32, initial_y: i
 #[cfg(test)]
 mod tests {
     use crate::day4::WordSearch;
-    use crate::{common, day4};
+    use crate::{day4, utils};
 
     fn real_input() -> String {
-        common::get_input(4, "resources/inputs").expect("Cannot get input")
+        utils::get_input(4, "resources/inputs").expect("Cannot get input")
     }
 
     fn sample_input() -> String {

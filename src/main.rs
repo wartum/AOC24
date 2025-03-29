@@ -1,4 +1,4 @@
-mod common;
+mod utils;
 mod day1;
 mod day2;
 mod day3;
@@ -18,8 +18,10 @@ fn init_qrc() {
 fn main() {
     register_all_qml_types();
     init_qrc();
+
     let mainwindow_url = QUrl::from(QString::from("qrc:/qml/mainwindow"));
     let mut engine = QmlEngine::new();
     engine.load_url(mainwindow_url);
+
     engine.exec();
 }

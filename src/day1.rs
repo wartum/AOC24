@@ -1,6 +1,6 @@
 use std::collections::HashMap;
 
-use crate::common::Solution;
+use crate::utils::Solution;
 
 pub fn solve(input: String) -> Result<Solution, String> {
     match parse_input(input) {
@@ -78,11 +78,11 @@ fn calculate_similiarities(columns: &[Vec<i32>; 2]) -> i32 {
 
 #[cfg(test)]
 mod tests {
-    use crate::common;
+    use crate::utils;
     use crate::day1;
 
     fn real_input() -> String {
-        common::get_input(1, "resources/inputs").expect("Cannot get input")
+        utils::get_input(1, "resources/inputs").expect("Cannot get input")
     }
 
     fn sample_input() -> String {

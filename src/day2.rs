@@ -1,4 +1,4 @@
-use crate::common::Solution;
+use crate::utils::Solution;
 
 pub fn solve(input: String) -> Result<Solution, String> {
     match parse_input(input) {
@@ -97,13 +97,13 @@ fn get_tendency(a: i32, b: i32) -> i32 {
 
 #[cfg(test)]
 mod tests {
-    use crate::common;
+    use crate::utils;
     use crate::day2;
 
     use super::remove_from_report;
 
     fn real_input() -> String {
-        common::get_input(2, "resources/inputs").expect("Cannot get input")
+        utils::get_input(2, "resources/inputs").expect("Cannot get input")
     }
 
     fn sample_input() -> String {
