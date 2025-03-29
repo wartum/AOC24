@@ -70,12 +70,12 @@ fn is_report_safe(report: &[i32]) -> bool {
         .get(1)
         .expect("report should contain at least 2 elements");
 
-    let tendency_init = get_tendency(first_element, second_element);
+    let initial_ordering = first_element.cmp(&second_element);
     let mut previous_level = &first_element;
 
     for current_level in report.iter().skip(1) {
-        let tendency_now = get_tendency(*previous_level, *current_level);
-        if tendency_now != tendency_init {
+        let current_ordering = previous_level.cmp(current_level);
+        if current_ordering != initial_ordering {
             return false;
         }
         if (current_level - previous_level).abs() > 3 {
@@ -85,14 +85,6 @@ fn is_report_safe(report: &[i32]) -> bool {
     }
     
     true
-}
-
-fn get_tendency(a: i32, b: i32) -> i32 {
-    match b.cmp(&a) {
-        std::cmp::Ordering::Equal => 0,
-        std::cmp::Ordering::Less => -1,
-        std::cmp::Ordering::Greater => 1
-    }
 }
 
 #[cfg(test)]
