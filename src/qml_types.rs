@@ -7,15 +7,26 @@ use crate::{day1, day2, day3, day4};
 
 #[derive(QObject, Default)]
 pub struct AOC24Solutions {
+    // fields
     base: qt_base_class!(trait QObject),
     solutions: HashMap<i32, Solution>,
     inputs_dir: qt_property!(QString;),
-    output: qt_property!(QString; NOTIFY output_changed),
-    output_changed: qt_signal!(),
+    solution1: qt_property!(i32; NOTIFY solution1_changed),
+    solution2: qt_property!(i32; NOTIFY solution2_changed),
+    error_msg: qt_property!(QString; NOTIFY error_msg_changed),
+
+    // signals
+    solution1_changed: qt_signal!(),
+    solution2_changed: qt_signal!(),
+    error_msg_changed: qt_signal!(),
+
+    // slots
     request_solution: qt_method!(
         fn request_solution(&mut self, day_number: i32) {
             self.request_solution_impl(day_number);
-            self.output_changed();
+            self.solution1_changed();
+            self.solution2_changed();
+            self.error_msg_changed();
         }
     ),
 }
@@ -24,13 +35,12 @@ impl AOC24Solutions {
     fn request_solution_impl(&mut self, day_number: i32) {
         match self.solutions.get(&day_number) {
             Some(solution) => {
-                self.output = QString::from(format!(
-                    "One Star: {}\nTwo stars: {}",
-                    solution.one_star_answer, solution.two_star_answer
-                ))
+                self.solution1 = solution.one_star_answer;
+                self.solution2 = solution.two_star_answer;
+                self.error_msg = QString::default();
             }
             None => match self.create_solution(day_number) {
-                Err(msg) => self.output = QString::from(msg),
+                Err(msg) => self.error_msg = QString::from(msg),
                 Ok(solution) => {
                     self.solutions.insert(day_number, solution);
                     self.request_solution_impl(day_number);

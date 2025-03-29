@@ -41,7 +41,6 @@ ApplicationWindow {
 
             Button {
                 text: "Inputs directory"
-
                 onClicked: {
                     folderPicker.visible = true
                 }
@@ -51,13 +50,11 @@ ApplicationWindow {
         GridLayout {
             Layout.alignment: Qt.AlignHCenter
             Layout.margins: 20
-
             columns: 5
             rows:5
             
             Button {
                 text: "Day 1"
-
                 onClicked: {
                     solutions.request_solution(1)
                 }
@@ -65,7 +62,6 @@ ApplicationWindow {
             
             Button {
                 text: "Day 2"
-                
                 onClicked: {
                     solutions.request_solution(2)
                 }
@@ -73,7 +69,6 @@ ApplicationWindow {
             
             Button {
                 text: "Day 3"
-                
                 onClicked: {
                     solutions.request_solution(3)
                 }
@@ -81,24 +76,45 @@ ApplicationWindow {
 
             Button {
                 text: "Day 4"
-                
                 onClicked: {
                     solutions.request_solution(4)
                 }
             }
         }
 
-        TextArea {
-            id: display
+        GridLayout {
             Layout.alignment: Qt.AlignHCenter
             Layout.margins: 20
-            Layout.fillWidth: true
-            Layout.fillHeight: true
-                
-            readOnly: true
-            font.family: "Noto Sans Mono"
-            horizontalAlignment: TextEdit.AlignHCenter
-            text: solutions.output
+            columns: 2
+            rows:3
+
+            Label {
+                text: "One star solution"
+                visible: solutions.error_msg.length == 0
+            }
+            TextArea {
+                    
+                readOnly: true
+                horizontalAlignment: TextEdit.AlignHCenter
+                text: solutions.solution1
+                visible: solutions.error_msg.length == 0
+            }
+
+            Label {
+                text: "Two star solution"
+                visible: solutions.error_msg.length == 0
+            }
+            TextArea {
+                readOnly: true
+                horizontalAlignment: TextEdit.AlignHCenter
+                text: solutions.solution2
+                visible: solutions.error_msg.length == 0
+            }
+
+            Label {
+                text: solutions.error_msg
+                visible: solutions.error_msg.length > 0
+            }
         }
     }
 }
