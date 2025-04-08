@@ -114,6 +114,13 @@ ApplicationWindow {
             Label {
                 text: solutions.error_msg
                 visible: solutions.error_msg.length > 0
+                Layout.fillHeight: false
+            }
+
+            Item {
+                // filler
+                Layout.fillHeight: true
+                Layout.rowSpan: 2
             }
         }
     }

@@ -56,9 +56,9 @@ fn calculate_distances(columns: &[Vec<i32>; 2]) -> i32 {
     let mut column2 = columns[1].iter();
 
     for _ in 0..column1.len() {
-        if let Some(v1) = column1.next() {
-            if let Some(v2) = column2.next() {
-                distances += (v1 - v2).abs();
+        if let Some(val1) = column1.next() {
+            if let Some(val2) = column2.next() {
+                distances += (val1 - val2).abs();
             }
         }
     }
