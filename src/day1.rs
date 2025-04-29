@@ -18,11 +18,9 @@ fn parse_input(input: String) -> Result<[Vec<i32>; 2], String> {
         .map(|line| {
             line.split_whitespace()
                 .next()
-                .ok_or(String::from("first column doesn't exist"))?
+                .ok_or("first column doesn't exist")?
                 .parse::<i32>()
-                .or(Err(String::from(
-                    "cannot convert value from first column to integer",
-                )))
+                .or(Err("cannot convert value from first column to integer"))
         })
         .collect();
 
@@ -31,23 +29,21 @@ fn parse_input(input: String) -> Result<[Vec<i32>; 2], String> {
         .map(|line| {
             line.split_whitespace()
                 .nth(1)
-                .ok_or(String::from("second column doesn't exist"))?
+                .ok_or("second column doesn't exist")?
                 .parse::<i32>()
-                .or(Err(String::from("cannot convert value from second column to integer")))
+                .or(Err("cannot convert value from second column to integer"))
         })
         .collect();
 
-    match column1 {
-        Err(msg) => Err(msg),
-        Ok(mut col1) => match column2 {
-            Err(msg) => Err(msg),
-            Ok(mut col2) => {
-                col1.sort();
-                col2.sort();
-                Ok([col1, col2])
-            }
+    if let Ok(mut col1) = column1 {
+        if let Ok(mut col2) = column2 {
+            col1.sort();
+            col2.sort();
+            return Ok([col1, col2]);
         }
     }
+
+    Err("Could not parse input".into())
 }
 
 fn calculate_distances(columns: &[Vec<i32>; 2]) -> i32 {
@@ -70,16 +66,16 @@ fn calculate_similiarities(columns: &[Vec<i32>; 2]) -> i32 {
     let mut dict = HashMap::new();
     for v in columns[0].iter() {
         let occurences_in_column2: i32 = columns[1].iter().filter(|x| **x == *v).count() as i32;
-        dict.insert(v.to_owned(), v * occurences_in_column2);
+        dict.insert(*v, v * occurences_in_column2);
     }
 
-    columns[0].iter().map(|v| dict.get(v).unwrap()).sum()
+    columns[0].iter().map(|v| dict.get(v).unwrap_or(&0)).sum()
 }
 
 #[cfg(test)]
 mod tests {
-    use crate::utils;
     use crate::day1;
+    use crate::utils;
 
     fn real_input() -> String {
         utils::get_input(1, "resources/inputs").expect("Cannot get input")
@@ -88,11 +84,11 @@ mod tests {
     fn sample_input() -> String {
         String::from(
             r#"3   4
-               4   3
-               2   5
-               1   3
-               3   9
-               3   3"#,
+4   3
+2   5
+1   3
+3   9
+3   3"#,
         )
     }
 
